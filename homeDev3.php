@@ -1,0 +1,282 @@
+<?php
+
+  include('./db_connect.php');
+
+//////////////// contar registros concluidos //////////////7
+
+$sqlPorStaff = "SELECT count(*) as conteo, a.staff_id, b.nombre as descripcion
+                    FROM tickets a, cat_personal b
+                    WHERE a.staff_id = b.idtrab
+                    GROUP by a.staff_id";
+
+$resultPorStaff = $conn->query($sqlPorStaff);
+while($rowTotalStaff = $resultPorStaff->fetch_assoc())
+{
+  $etiqueta.= "'".($rowTotalStaff['descripcion'])."',";
+  $conteo.= $rowTotalStaff['conteo'].",";
+}
+$etiqueta = rtrim($etiqueta,",");
+$conteo = rtrim($conteo,",");
+
+////////////////////////////////////
+$sqlPorStatus = "SELECT count(*) as conteo, a.status, b.descripcion_status as descripcion
+                 FROM tickets a, cat_status b
+                 WHERE a.status = b.id_status
+                 GROUP by a.status ";
+
+$resultPorStatus = $conn->query($sqlPorStatus);
+while($rowTotalStatus = $resultPorStatus->fetch_assoc())
+{
+  $etiquetaStatus.= "'".($rowTotalStatus['descripcion'])."',";
+  $conteoStatus.= $rowTotalStatus['conteo'].",";
+}
+$etiquetaStatus = rtrim($etiquetaStatus,",");
+$conteoStatus = rtrim($conteoStatus,",");
+
+////////////////////////////////////////////////////////
+
+$sqlPorArea = "SELECT count(*) as conteo, c.abreviatura as descripcion
+                 FROM tickets a, personal_cjef b, cat_areas c
+                 WHERE b.areas = c.id
+                 AND a.customer_id = b.idtrab
+                 GROUP BY c.abreviatura ";
+
+$resultPorArea = $conn->query($sqlPorArea);
+while($rowTotalArea = $resultPorArea->fetch_assoc())
+{
+  $etiquetaArea.= "'".($rowTotalArea['descripcion'])."',";
+  $conteoArea.= $rowTotalArea['conteo'].",";
+}
+$etiquetaArea = rtrim($etiquetaArea,",");
+$conteoArea = rtrim($conteoArea,",");
+/////////////////////// fin contar registros concluidos //////////////////////////////////////
+
+
+?>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/dist/css/charts.css" media="screen" />
+<!-- Info boxes -->
+<div class="col-12">
+       <div class="card">
+         <div class="card-body">
+           Bienvenido <?php echo $_SESSION['login_name'] ?>!
+         </div>
+       </div>
+   </div>
+
+        <div class="row">
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-ticket-alt"></i></span>
+              <div class="info-box-content">
+                <a href="./index.php?page=newTicketStaffList" class="nav-link">
+                  <span class="info-box-text">Total Tickets</span>
+                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets")->num_rows; ?></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-ticket-alt"></i></span>
+              <div class="info-box-content">
+                <a href="./index.php?page=newTicketStaffList" class="nav-link">
+                  <span class="info-box-text">Total Tickets Cerrados</span>
+                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets where status = 2")->num_rows; ?></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-ticket-alt"></i></span>
+              <div class="info-box-content">
+                <a href="./index.php?page=newTicketStaffPersonal" class="nav-link">
+                  <span class="info-box-text">Mis Tickets</span>
+                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets where status <> 2 and staff_id = ".$_SESSION['login_id'])->num_rows; ?></span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+
+
+          <!--
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-users"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Customers</span>
+                <span class="info-box-number">
+                  <?php echo $conn->query("SELECT * FROM customers")->num_rows; ?>
+                </span>
+              </div>
+            </div>
+          </div>
+        -->
+          <!-- /.col -->
+          <!--
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user"></i></span>
+              <div class="info-box-content">
+                <span class="info-box-text">Total Staff</span>
+                 <span class="info-box-number">
+                  <?php echo $conn->query("SELECT * FROM staff")->num_rows; ?>
+                </span>
+              </div>
+            </div>
+          </div>
+        -->
+          <!-- /.col -->
+
+          <!-- fix for small devices only -->
+          <!--
+          <div class="clearfix hidden-md-up"></div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-columns"></i></span>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Total Departments</span>
+                <span class="info-box-number"><?php echo $conn->query("SELECT * FROM departments")->num_rows; ?></span>
+              </div>
+            </div>
+          </div>
+        -->
+
+          <!-- /.col -->
+        </div>
+
+<!--   gráficas   -->
+  <!-- inicia Row gráficas -->
+  <div class="row">
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tickets por Staff de Soporte</span>
+           <span class="info-box-number">
+             <canvas class="pie-chart" id="pieTotalStaff">
+             </canvas>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-ticket-alt"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tickets por Estatus</span>
+           <span class="info-box-number">
+             <canvas class="pie-chart" id="pieStatus">
+             </canvas>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-columns"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">Tickets por Área</span>
+           <span class="info-box-number">
+             <canvas class="pie-chart" id="pieArea">
+             </canvas>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  <!-- fin Row gráficas -->
+  </div>
+
+
+
+
+
+<script type="text/javascript">
+//pie chart
+var pie = document.getElementById('pieTotalStaff');
+var pieConfig = new Chart(pie, {
+  type: 'pie',
+  data: {
+      labels: [<?php echo $etiqueta; ?>],
+      datasets: [{
+          label: '# of data',
+          data: [<?php echo $conteo; ?>],
+          backgroundColor: ["#26547c", "#ef476f","#ffd166","#06d6a0","#ff206e"],
+          borderWidth: 1
+      }]
+  },
+  options: {
+      responsive: true, // Instruct chart js to respond nicely.
+      maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+  }
+});
+
+var pie = document.getElementById('pieStatus');
+var pieConfig = new Chart(pie, {
+  type: 'pie',
+  data: {
+      labels: [<?php echo $etiquetaStatus; ?>],
+      datasets: [{
+          label: '# of data',
+          data: [<?php echo $conteoStatus; ?>],
+          backgroundColor: ["#26547c", "#ef476f","#ffd166","#06d6a0","#ff206e"],
+          borderWidth: 1
+      }]
+  },
+  options: {
+      responsive: true, // Instruct chart js to respond nicely.
+      maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+  }
+});
+
+var pie = document.getElementById('pieArea');
+var pieConfig = new Chart(pie, {
+  type: 'pie',
+  data: {
+      labels: [<?php echo $etiquetaArea; ?>],
+      datasets: [{
+          label: '# of data',
+          data: [<?php echo $conteoArea; ?>],
+          backgroundColor: ["#26547c", "#ef476f","#ffd166","#06d6a0","#ff206e"],
+          borderWidth: 1
+      }]
+  },
+  options: {
+      responsive: true, // Instruct chart js to respond nicely.
+      maintainAspectRatio: true, // Add to prevent default behaviour of full-width/height
+  }
+});
+/*
+new Chart(document.getElementById("pie-chart-status"), {
+        type: 'pie',
+        data: {
+          <?php echo $etiquetasSub; ?>
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#06d6a0", "#1b9aaa", "#ef476f"],
+            <?php echo $conteoSub; ?>
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: '<?php echo ($_SESSION['nombreArea']); ?>'
+          }
+        }
+      });
+*/
+
+
+
+</script>

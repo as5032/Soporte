@@ -1,0 +1,17 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "172.17.232.110",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Producción 110",
+            "database": "css_db",
+            "username": "root",
+            "password": "4dm1n1str4d0r"
+        }
+    ]
+}
