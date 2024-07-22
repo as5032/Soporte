@@ -95,7 +95,7 @@ $combinadoArea = rtrim($combinadoArea,",");
               <div class="info-box-content">
                 <a href="./index.php?page=newTicketStaffList" class="nav-link">
                   <span class="info-box-text">Total Tickets</span>
-                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets ")->num_rows; ?> </span>
+                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets where YEAR(date_created) = YEAR(CURDATE());")->num_rows; ?> </span>
                 </a>
               </div>
             </div>
@@ -107,7 +107,7 @@ $combinadoArea = rtrim($combinadoArea,",");
               <div class="info-box-content">
                 <a href="./index.php?page=newTicketStaffList" class="nav-link">
                   <span class="info-box-text">Total Tickets Cerrados</span>
-                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets where status = 2")->num_rows; ?></span>
+                  <span class="info-box-number"><?php echo $conn->query("SELECT * FROM tickets where status = 2 AND YEAR(date_created) = YEAR(CURDATE());")->num_rows; ?></span>
                 </a>
               </div>
             </div>
