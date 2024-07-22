@@ -218,7 +218,7 @@ function hash_password($postdata, $xcrud)
 
 function alogs($xcrud)
 {
-    $conn = new mysqli("localhost", "root", "4dm1n1str4d0r", "css_db");
+    $conn = new mysqli("localhost", "root", "", "css_db");
     mysqli_set_charset($conn,
         "utf8"
     );

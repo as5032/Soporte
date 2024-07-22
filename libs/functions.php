@@ -38,7 +38,7 @@ function drop_down($query, $nombre, $id, $javascript,$campo1,$campo2,$class, $op
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "4dm1n1str4d0r";
+	$password = "";
 	$dbname = "css_db";
 
 // Create connection
@@ -112,7 +112,7 @@ function drop_down_utf8($query, $nombre, $id, $javascript,$campo1,$campo2,$class
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "4dm1n1str4d0r";
+	$password = "";
 	$dbname = "css_db";
 
 // Create connection
@@ -136,7 +136,7 @@ function drop_down_utf8_encode($query, $nombre, $id, $javascript,$campo1,$campo2
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "4dm1n1str4d0r";
+	$password = "";
 	$dbname = "css_db";
 
 // Create connection
@@ -185,7 +185,7 @@ function drop_down_selected($query, $nombre, $id, $javascript,$campo1,$campo2,$c
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "4dm1n1str4d0r";
+	$password = "";
 	$dbname = "asesores";
 
 	// Create connection
@@ -221,7 +221,7 @@ function drop_down_selected_utf8($query, $nombre, $id, $javascript,$campo1,$camp
 
 	$servername = "localhost";
 	$username = "root";
-	$password = "4dm1n1str4d0r";
+	$password = "";
 	$dbname = "asesores";
 
 	// Create connection
