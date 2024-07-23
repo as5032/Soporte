@@ -7,7 +7,7 @@
     </li>
     <li>
       <a class="nav-link text-white" href="./" role="button">
-        <large><b>Sistema de Mesa de Servicio</b></large>
+        <large><b>Mesa de Ayuda DTIC</b></large>
       </a>
     </li>
   </ul>

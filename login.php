@@ -9,7 +9,7 @@ include('./db_connect.php');
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Login | Sistema mesa de control</title>
+	<title>Login | Mesa de Ayuda DTIC</title>
 
 	<?php include('./header.php'); ?>
 	<?php
@@ -42,7 +42,7 @@ include('./db_connect.php');
 	<main id="main">
 
 		<div class="align-self-center w-100">
-			<h4 class="text-white text-center"><b>Sistema de Mesa de Servicio</b></h4>
+			<h4 class="text-white text-center"><b>Mesa de Ayuda DTIC</b></h4>
 			<center>
 				<div id="login-center">
 					<div class="card col-md-4">
