@@ -152,7 +152,7 @@ include("libs/functions.php");
       loadTickets();
 
       // Actualizar tickets cada 5 minutos
-      setInterval(loadTickets, 300000);
+      setInterval(loadTickets, 3000);
     });
   </script>
   <?php if ($no_registros > 2) {  ?>
