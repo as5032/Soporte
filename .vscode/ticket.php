@@ -12,35 +12,23 @@ include("libs/functions.php");
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Mesa de Ayuda</title>
-  <!-- <script src="js/jquery.min.js" type="text/javascript"></script> -->
   <script src="js/jquery-1.12.4.js"></script>
   <script src="js/selectize.min.js"></script>
   <link rel="stylesheet" type="text/css" href="css/selectize.css" media="screen" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home | Customer Support System</title>
-  <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-
-  <!-- overlayScrollbars -->
   <link rel="stylesheet" href="assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- DataTables -->
   <link rel="stylesheet" href="assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-  <!-- Select2 -->
   <link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- SweetAlert2 -->
   <link rel="stylesheet" href="assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <!-- Toastr -->
   <link rel="stylesheet" href="assets/plugins/toastr/toastr.min.css">
-  <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/adminlte.min.css">
   <link rel="stylesheet" href="assets/dist/css/styles.css">
-  <!-- <script src="assets/plugins/jquery/jquery.min.js"></script> -->
-  <!-- summernote -->
   <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">
 </head>
 <style>
@@ -54,7 +42,6 @@ include("libs/functions.php");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
-    /* background: #007bff; */
   }
 
   main#main {
@@ -85,7 +72,6 @@ include("libs/functions.php");
   .fa-arrow-up,
   .fa-arrow-down {
     color: #000;
-    /* Negro */
   }
 </style>
 
@@ -119,57 +105,10 @@ include("libs/functions.php");
               </div>
               <input type="submit" name="add" id="add" value="Guardar" class="btn-sm btn-block btn-wave col-md-4 btn-primary" />
               <br>
-              <?php
-              $tabla = mysqli_query($conn, "SELECT nombre, paterno, materno, t.description, t.date_created, descripcion_status, t.id, abreviatura, t.status 
-              FROM tickets t 
-              INNER JOIN cat_status ON t.status = id_status 
-              LEFT JOIN personal_cjef ON t.customer_id = personal_cjef.idtrab
-              LEFT JOIN cat_areas On t.department_id = cat_areas.id
-              WHERE t.status <> 2 
-              AND t.date_created >= DATE_SUB(CURDATE(), INTERVAL 1 DAY) 
-              ORDER BY t.date_created DESC");
-              $no_registros = mysqli_num_rows($tabla);
-              if ($no_registros > 0) {
-              ?>
-                <label for="categoria" class="control-label text-dark">En atención:</label>
-                <br>
-              <?php } ?>
-              <?php if ($no_registros > 2) {  ?>
-                <link rel="stylesheet" href="assets/plugins/fontawesome-free/css/all.min.css">
-              <?php } ?>
-              <center><i class="fa fa-arrow-up" id="nt-example1-prev"></i></center>
-              <ul class="ta5" id="nt-example1">
-                <?php
-                if ($no_registros > 0) {
-                  $c = 0;
-                  while ($registro = mysqli_fetch_assoc($tabla)) {
-                    $c++;
-                    if ($c % 2 == 0) {
-                      $color = '#ebebeb';
-                    } else {
-                      $color = '#ffffff';
-                    } // para intercalar el color de la tabla
-                    $fecha = $registro["date_created"];
-                    $Trabajo_fecha = $fecha;
-                    $TAno = substr($Trabajo_fecha, 0, 4); // Se obtiene el año
-                    $TMes = substr($Trabajo_fecha, 5, 2); //Se obtiene el mes
-                    $TDia = substr($Trabajo_fecha, 8, 2); //Se obtiene el Dia
-                    $THora = substr($Trabajo_fecha, 11, 2);
-                    $TMinuto = substr($Trabajo_fecha, 14, 2);
-                    $fecha = $TDia . "/" . $TMes . "/" . $TAno . "  " . $THora . ":" . $TMinuto; // aqui se invierten los valores para presentar la fecha en formato normal
-                    $texto = ucwords(strtolower($registro["description"]));
-                    $usuario = $registro['nombre'] . " " . $registro['paterno'] . " " . $registro['materno'];
-                    echo "<li class='control-label text-dark' style='background-color: $color;'>" . "<strong>TICKET: " . $registro['id'] . "</strong>  ---->  <em>" . $texto . "</em><br><strong>" . "Usuario: </strong>" . $usuario . " <strong> " . $registro['abreviatura'] . "</strong> " .   $fecha . "-----> <strong>" . $registro["descripcion_status"] . "</strong></li>";
-                    // echo "<li class='control-label text-dark'>" . "<strong>TICKET: " . $registro['id'] . "</strong>  ---->  <em>" . $texto . "</em><br>" . "Solicitado: " . $fecha . "-----> <strong>" . $registro["descripcion_status"] . "</strong>  Atiende: <strong>" . $registro['nombre'] . "</strong></li>";
-                  }
-                }
-                // }else{ echo "<H3 class='PORTADA'> <CENTER>NO HAY TICKETS</CENTER></H3>";} 
-                ?>
-                <br>
+              <label for="categoria" class="control-label text-dark">En atención:</label>
+              <ul class="ta5" id="ticketList">
+                <!-- Aquí se cargarán los tickets -->
               </ul>
-              <?php if ($no_registros > 2) {  ?>
-                <center><i class="fa fa-arrow-down" id="nt-example1-next"></i></center>
-              <?php } ?>
             </form>
             <h3>
               <div id="postData"></div>
@@ -177,7 +116,6 @@ include("libs/functions.php");
           </div>
         </div>
       </div>
-
   </main>
   <script type="text/javascript">
     $(document).ready(function() {
@@ -196,13 +134,32 @@ include("libs/functions.php");
           }
         });
       });
+
+      function loadTickets() {
+        $.ajax({
+          url: 'get_tickets.php',
+          type: 'GET',
+          success: function(data) {
+            $('#ticketList').html(data);
+          },
+          error: function() {
+            alert("Failed to load tickets!");
+          }
+        });
+      }
+
+      // Cargar tickets al cargar la página
+      loadTickets();
+
+      // Actualizar tickets cada 5 minutos
+      setInterval(loadTickets, 300000);
     });
   </script>
   <?php if ($no_registros > 2) {  ?>
-    <script src="js/jquery.newsTicker.js"></script> <!-- funcionamiento del slider news-->
+    <script src="js/jquery.newsTicker.js"></script>
   <?php }  ?>
   <script>
-    var nt_example1 = $('#nt-example1').newsTicker({ // funcionamiento de scroll automatico primero
+    var nt_example1 = $('#nt-example1').newsTicker({
       row_height: 70,
       max_rows: 2,
       duration: 4000,
@@ -216,12 +173,6 @@ include("libs/functions.php");
         sortField: 'text'
       });
     });
-  </script>
-  <!-- Script para recargar la página cada 5 minutos -->
-  <script>
-    setTimeout(function() {
-      location.reload();
-    }, 300000); // 300000 ms = 5 minutos
   </script>
 </body>
 
