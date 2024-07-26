@@ -89,11 +89,7 @@ $xcrud->relation('abogado', 'cat_abogado', 'id', 'n_abogado', 'cat_abogado.estat
 $xcrud->relation('ministro', 'cat_ministro', 'id', 'ministros');
 $xcrud->relation('seguimiento', 'cat_seguimiento', 'id', 'seguimiento');
 $xcrud->relation('prioridad', 'cat_prioridad', 'id', 'nivel');
-
-$encrypted_idcaptura = md5($idcaptura);
-$encrypted=md5("abogado','cat_abogado");
-
-$xcrud->button('seguimiento_procedimiento.php?$encrypted,id={idcaptura},$encrypted,', 'Seguimiento', 'glyphicon-screenshot', '', array('target' => '_self'));
+$xcrud->button('seguimiento_procedimiento.php?id={idcaptura},', 'Seguimiento', 'glyphicon-screenshot', '', array('target' => '_self'));
 $xcrud->change_type('acuse', 'file', '', array('not_rename' => true));
 //botones de control
 $xcrud->unset_remove();
