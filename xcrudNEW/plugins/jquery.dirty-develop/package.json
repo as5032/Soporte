@@ -1,0 +1,47 @@
+{
+  "name": "jquery.dirty",
+  "version": "0.8.4",
+  "description": "A jQuery plugin for detecting if a form has been modified",
+  "main": "dist/jquery.dirty.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "node-qunit-phantomjs test/test.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simon-reynolds/jquery.dirty.git"
+  },
+  "keywords": [
+    "ecosystem:jquery",
+    "jquery-plugin",
+    "jquery",
+    "form",
+    "modified",
+    "dirty"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Simon Reynolds",
+    "email": "npmjs@simonreynolds.ie",
+    "url": "https://simonreynolds.ie"
+  },
+  "bugs": {
+    "url": "https://github.com/simon-reynolds/jquery.dirty/issues"
+  },
+  "homepage": "https://simon-reynolds.github.io/jquery.dirty/",
+  "devDependencies": {
+    "@types/jquery": "3.5.14",
+    "braces": "3.0.2",
+    "jquery": "3.6.0",
+    "kind-of": "6.0.3",
+    "minimist": "1.2.6",
+    "node-qunit-phantomjs": "2.1.1",
+    "qunitjs": "2.4.0"
+  },
+  "resolutions": {
+    "minimist": "1.2.6",
+    "braces": "3.0.2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "name": "shop",
+    "host": "ftp.elinge.shop",
+    "protocol": "sftp",
+    "port": 21,
+    "username": "alex@elinge.shop",
+    "remotePath": "/home/elinge/public_html",
+    "uploadOnSave": false,
+    "useTempFile": false,
+    "openSsh": false
+
+}
