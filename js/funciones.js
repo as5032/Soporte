@@ -1,3 +1,5 @@
+;
+
 function StandardText(field) {
 	remove_XS_whitespace(field);
 	ChangeTextDown(field);
@@ -26,7 +28,7 @@ function remove_XS_whitespace(field) {
 }
 
 function StrangerCharacters(field, AddCharacter) {
-	var strValid = "ÔÂÊÎÛÇ<>#/+'|¬°[]{}^`´ÀÈÌÒÙÜÄËÏÖ";
+	var strValid = "ÔÂÊÎÛÇ<>#/+'|¬°[]{}^`´ÀÈÌÒÙÜÄËÏÖ,";
 	if (AddCharacter != '') {
 		strValid += AddCharacter;
 	}
@@ -52,3 +54,8 @@ function ChangeTextDown(field) {
 	strText = field.value;
 	field.value = strText.toLowerCase()
 }
+
+
+function cuenta() {
+	document.myForm.caracteres.value = document.myForm.descripcion2.value.length
+		}
