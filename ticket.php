@@ -110,8 +110,11 @@ include("libs/functions.php");
               </div>
               <div class="form-group">
                 <label for="categoria" class="control-label text-dark">Descripción</label>
-                <textarea name="descripcion" id="descripcion" onBlur="JavaScript:StandardText(this);" class="form-control form-control-sm" rows="4" required></textarea>
+                <textarea name="descripcion" id="descripcion" onBlur="JavaScript:StandardText(this);" class="form-control form-control-sm" onKeyDown="cuenta()" onKeyUp="cuenta()"  rows="4" required></textarea>
               </div>
+              <input type="text" class="input-small" name="caracteres" disabled="disabled" size=1>
+              <br>
+              <br>
               <input type="submit" name="add" id="add" value="Guardar" class="btn-sm btn-block btn-wave col-md-4 btn-primary" />
             </form>
             <br>
@@ -151,7 +154,7 @@ include("libs/functions.php");
                                                   $THora = substr($Trabajo_fecha, 11, 2);
                                                   $TMinuto = substr($Trabajo_fecha, 14, 2);
                                                   $fecha = $TDia . "/" . $TMes . "/" . $TAno . "  " . $THora . ":" . $TMinuto; // aqui se invierten los valores para presentar la fecha en formato normal
-                                                  $texto = ucwords(strtolower($registro["description"]));
+                                                  //$texto = ucwords(strtolower($registro["description"]));
                                                   $usuario = $registro['nombre'] . " " . $registro['paterno'] . " " . $registro['materno'];
                                                   echo "<li class='control-label text-dark' style='background-color: $color;'>" . "<strong>TICKET: " . $registro['id'] . "</strong>  ---->  <em>" . $texto . "</em><br><strong>" . "Usuario: </strong>" . $usuario . " " .   $fecha . "-----> <strong>" . $registro["descripcion_status"] . "</strong></li>";
                                                   //                      echo "<li class='control-label text-dark' style='background-color: $color;'>" . "<strong>TICKET: " . $registro['id'] . "</strong>  ---->  <em>" . $texto . "</em><br><strong>" . "Usuario: </strong>" . $usuario . " <strong> " . $registro['abreviatura'] . "</strong> " .   $fecha . "-----> <strong>" . $registro["descripcion_status"] . "</strong></li>";
